@@ -1,21 +1,20 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
-import { Button, Input } from "./components/atoms";
+import { LoginForm } from "./components/molecules";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 function App() {
-  //modifie pour avoir un compteur qui s'incremente
-  const [count, setCount] = useState(0);
-  const handleClick = () => {
-    setCount(count + 1);
-    console.log(count);
-  };
-
+  const user = useSelector((state) => {
+    return state.user;
+  });
   return (
-    <div className="App">
-      <Button buttonTitle={"test"} action={handleClick} />
-      <Input />
-    </div>
+    <Router>
+      <div className="App">
+        <LoginForm />
+      </div>
+    </Router>
   );
 }
 

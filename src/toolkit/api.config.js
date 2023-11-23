@@ -1,6 +1,6 @@
 const apiStation = (method, path, data, token) => {
   const config = {
-    baseUrl: "http://127.0.0.1:8000/api/",
+    baseUrl: "http://localhost:8000/api/",
     path: path,
     token: token,
   };
@@ -10,14 +10,17 @@ const apiStation = (method, path, data, token) => {
   };
 
   let headers = () => {
-    return config.token
-      ? {
-          Authorization: `Bearer ${config.token}`,
-          "Content-Type": "application/json",
-        }
-      : {
-          "Content-Type": "application/json",
-        };
+    let baseHeaders = {
+      "Content-Type": "application/json",
+    };
+
+    if (config.token) {
+      baseHeaders["Authorization"] = `Bearer ${config.token}`;
+    }
+
+    //baseHeaders["Access-Control-Allow-Origin"] = "*";
+
+    return baseHeaders;
   };
 
   return {

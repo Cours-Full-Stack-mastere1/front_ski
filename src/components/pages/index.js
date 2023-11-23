@@ -5,4 +5,14 @@ import CreatePiste from "./Piste";
 import Station from "./Station";
 import CreateStation from "./Station";
 import AllStations from "./Station";
-export { Home, Login, Piste, CreatePiste, Station, CreateStation, AllStations };
+import Map from "./Map/Map";
+export {
+  Home,
+  Login,
+  Piste,
+  CreatePiste,
+  Station,
+  CreateStation,
+  AllStations,
+  Map,
+};

@@ -13,6 +13,7 @@ export const loginCheck = createAsyncThunk("user/login", async (payload) => {
       return res;
     })
     .catch((err) => {
+      console.log("err", err);
       return err;
     });
 

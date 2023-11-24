@@ -18,7 +18,7 @@ const apiStation = (method, path, data, token) => {
       baseHeaders["Authorization"] = `Bearer ${config.token}`;
     }
 
-    //baseHeaders["Access-Control-Allow-Origin"] = "*";
+    baseHeaders["Access-Control-Allow-Origin"] = "*";
 
     return baseHeaders;
   };

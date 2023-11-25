@@ -12,7 +12,11 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <LoginForm />
+        {user?.username ? (
+          <div>Logged in as {user.username}</div>
+        ) : (
+          <LoginForm />
+        )}
       </div>
     </Router>
   );

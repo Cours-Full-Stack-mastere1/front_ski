@@ -13,14 +13,13 @@ export const loginCheck = createAsyncThunk("user/login", async (payload) => {
       return res;
     })
     .catch((err) => {
-      console.log("err", err);
       return err;
     });
 
   return response;
 });
 export const getProfile = createAsyncThunk("user/profile", async (payload) => {
-  const config = apiStation("get", `profile`, {}, payload?.token);
+  const config = apiStation("get", `user`, {}, payload?.token);
   const response = await axios(config)
     .then((res) => {
       return res;

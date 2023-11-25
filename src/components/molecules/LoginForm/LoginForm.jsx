@@ -39,7 +39,6 @@ const LoginForm = () => {
       <Input placeholder="Username" onChange={handleUsernameChange} />
       <Input placeholder="Password" onChange={handlePasswordChange} />
       <Button buttonTitle="Connexion" action={validate} />
-      {user?.token}
     </Card>
   );
 };

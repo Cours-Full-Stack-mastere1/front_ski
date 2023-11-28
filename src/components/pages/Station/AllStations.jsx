@@ -78,7 +78,7 @@ const AllStations = () => {
       )}
       {selectedStation == null ? (
         <AddWrapper>
-          <Button buttonTitle="Ajouter une station" action={selectStation} />
+          <Button buttonTitle="Ajouter une station" action={() => {}} />
         </AddWrapper>
       ) : (
         ""

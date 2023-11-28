@@ -27,6 +27,8 @@ const PisteCard = (props) => {
     );
   };
 
+  //TODO: Add a button to delete the piste
+  //TODO: Add a button to update the piste
   return (
     <Card>
       {statusIndicator(props.pisteData.ouvert)}
@@ -34,6 +36,8 @@ const PisteCard = (props) => {
       <p>{props.pisteData.difficulte}</p>
       <p>{props.pisteData.longeur} kms</p>
       <p> Difficulte: {props.pisteData.couleur}</p>
+      <Button buttonTitle="Supprimer la piste" action={props.action} />
+      <Button buttonTitle="Modifier la piste" action={props.action} />
     </Card>
   );
 };

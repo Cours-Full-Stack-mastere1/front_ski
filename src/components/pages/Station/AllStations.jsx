@@ -17,6 +17,12 @@ const AllStations = () => {
     width: 100%;
     height: 100%;
   `;
+  const AddWrapper = styled.div`
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  `;
 
   const [datas, setDatas] = useState(false);
   const user = useSelector((state) => {
@@ -70,6 +76,9 @@ const AllStations = () => {
           <Station cancel={cancelStation} datas={selectedStation} />
         </StyledStation>
       )}
+      <AddWrapper>
+        <Button buttonTitle="Ajouter une piste" action={() => {}} />
+      </AddWrapper>
     </AllStationsStyled>
   );
 };

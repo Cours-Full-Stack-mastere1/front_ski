@@ -89,10 +89,10 @@ const Station = (props) => {
         <Button buttonTitle="Ajouter une piste" action={props.ajouter} />
       </AddWrapper>
       <DeleteWrapper>
-        <Button buttonTitle="Supprimer" action={props.supprimer} />
+        <Button buttonTitle="Supprimer la station" action={props.supprimer} />
       </DeleteWrapper>
       <UpdateWrapper>
-        <Button buttonTitle="Modifier" action={props.modifier} />
+        <Button buttonTitle="Modifier la station" action={props.modifier} />
       </UpdateWrapper>
     </StationStyled>
   );

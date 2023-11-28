@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import "./button.css";
 
 const Button = ({ buttonTitle, action, ...props }) => {
   const [label, setLabel] = useState(buttonTitle);
   return (
     <>
-      <span className="nes-pointer">
-        <h1 onClick={action} /* className={styledButton} */>{label}</h1>
+      <span>
+        <h1
+          className="monBouton"
+          onClick={action} /* className={styledButton} */
+        >
+          {label}
+        </h1>
       </span>
     </>
   );

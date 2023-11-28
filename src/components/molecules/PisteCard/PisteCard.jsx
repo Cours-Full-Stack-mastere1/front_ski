@@ -35,6 +35,7 @@ const PisteCard = (props) => {
       <h1>{props.pisteData.nom}</h1>
       <p>{props.pisteData.difficulte}</p>
       <p>{props.pisteData.longeur} kms</p>
+      <p>Temps moyen: {props.pisteData.temps}</p>
       <p> Difficulte: {props.pisteData.couleur}</p>
       <Button buttonTitle="Supprimer la piste" action={props.action} />
       <Button buttonTitle="Modifier la piste" action={props.action} />

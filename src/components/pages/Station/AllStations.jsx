@@ -76,9 +76,13 @@ const AllStations = () => {
           <Station cancel={cancelStation} datas={selectedStation} />
         </StyledStation>
       )}
-      <AddWrapper>
-        <Button buttonTitle="Ajouter une piste" action={() => {}} />
-      </AddWrapper>
+      {selectedStation == null ? (
+        <AddWrapper>
+          <Button buttonTitle="Ajouter une station" action={selectStation} />
+        </AddWrapper>
+      ) : (
+        ""
+      )}
     </AllStationsStyled>
   );
 };

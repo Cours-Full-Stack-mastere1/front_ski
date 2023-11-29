@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { apiStation } from "../../../toolkit/api.config";
 import axios from "axios";
+import { useEffect } from "react";
 
 const StationCard = (props) => {
   const user = useSelector((state) => {
@@ -18,18 +19,22 @@ const StationCard = (props) => {
 
     const config = apiStation(
       "get",
-      "station/" + props.datas.id + "/piste",
+      "station/" + props.stationData.id + "/isOpened",
       {},
       user.token
     );
     axios(config)
       .then((res) => {
-        setIsOpen(res.data);
+        setIsOpen(res.data.ouvert);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    getOpen();
+  }, []);
 
   const statusIndicator = isOpen ? (
     <div

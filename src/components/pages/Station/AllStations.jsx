@@ -7,6 +7,7 @@ import StationCard from "../../molecules/StationCard/StationCard";
 import Station from "../Station/Station";
 import { Button } from "../../atoms";
 import styled from "styled-components";
+import CreateStation from "../Station/CreateStation";
 
 const AllStations = () => {
   let AllStationsStyled = styled.div`
@@ -23,6 +24,12 @@ const AllStations = () => {
     left: 50%;
     transform: translate(-50%, 0);
   `;
+  const ConfirmWrapper = styled.div`
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  `;
 
   const [datas, setDatas] = useState(false);
   const user = useSelector((state) => {
@@ -30,11 +37,18 @@ const AllStations = () => {
   });
 
   const [selectedStation, setSelectedStation] = useState(null);
+  const [addStation, setAddStation] = useState(false);
+  const addStationForm = () => {
+    setAddStation(true);
+  };
+
   const selectStation = (station) => {
     setSelectedStation(station);
   };
   const cancelStation = () => {
     setSelectedStation(null);
+    setAddStation(false);
+    getStations();
   };
 
   const getStations = () => {
@@ -52,15 +66,45 @@ const AllStations = () => {
       });
   };
 
+  const createStation = (nom, latitude, longitude) => {
+    if (user?.auth !== true) {
+      return <div>Vous devez être connecté pour voir les stations</div>;
+    }
+
+    const config = apiStation(
+      "post",
+      "station",
+      { nom: nom, gps: latitude + "," + longitude },
+      user.token
+    );
+    axios(config)
+      .then((res) => {
+        cancelStation();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getStations();
   }, []);
 
   return (
     <AllStationsStyled>
-      {selectedStation == null ? <h1>Liste des stations</h1> : ""}
       {selectedStation == null ? (
-        datas ? (
+        addStation ? (
+          <CreateStation cancel={cancelStation} confirm={createStation} />
+        ) : (
+          <h1>Liste des stations</h1>
+        )
+      ) : (
+        ""
+      )}
+      {selectedStation == null ? (
+        addStation ? (
+          ""
+        ) : datas ? (
           datas.map((data) => (
             <StationCard
               key={data.id}
@@ -77,9 +121,13 @@ const AllStations = () => {
         </StyledStation>
       )}
       {selectedStation == null ? (
-        <AddWrapper>
-          <Button buttonTitle="Ajouter une station" action={() => {}} />
-        </AddWrapper>
+        addStation ? (
+          ""
+        ) : (
+          <AddWrapper>
+            <Button buttonTitle="Ajouter une station" action={addStationForm} />
+          </AddWrapper>
+        )
       ) : (
         ""
       )}

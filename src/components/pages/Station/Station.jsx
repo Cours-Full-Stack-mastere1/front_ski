@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { apiStation } from "../../../toolkit/api.config";
+import { apiMeteo, apiStation } from "../../../toolkit/api.config";
 import axios from "axios";
 import { useEffect } from "react";
 import { Button } from "../../atoms";
@@ -45,6 +45,7 @@ const Station = (props) => {
     return state.user;
   });
   const [pistes, setPistes] = useState(null);
+  const [meteo, setMeteo] = useState(null);
 
   const getPistes = () => {
     if (user?.auth !== true) {
@@ -66,8 +67,21 @@ const Station = (props) => {
       });
   };
 
+  const getMeteo = () => {
+    const config = apiMeteo(props.datas.gps);
+    axios(config)
+      .then((res) => {
+        console.log(res.data);
+        setMeteo(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getPistes();
+    getMeteo();
   }, []);
 
   //TODO: add map to see where is the station
@@ -81,6 +95,25 @@ const Station = (props) => {
       {pistes
         ? pistes.map((data) => <PisteCard key={data.id} pisteData={data} />)
         : "Pas encore de pistes pour cette station"}
+      {/* Affichage des prévisions météorologiques */}
+      {meteo ? (
+        <div>
+          <h2>Prévisions météorologiques pour {props.datas.nom}</h2>
+          {meteo.forecast.map((forecastData, index) => (
+            <div key={index}>
+              <p>Date et heure : {forecastData.datetime}</p>
+              <p>Vent : {forecastData.wind10m} km/h</p>
+              <p>Précipitations : {forecastData.rr10} mm</p>
+              {/* Ajoutez d'autres éléments à afficher selon vos besoins */}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          Pas de données météorologiques disponibles pour le moment.(Ou token
+          error)
+        </div>
+      )}
 
       <CancelWrapper>
         <Button buttonTitle="Retour" action={props.cancel} />

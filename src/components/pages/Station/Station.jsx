@@ -9,6 +9,7 @@ import PisteCard from "../../molecules/PisteCard/PisteCard";
 import styled from "styled-components";
 import CreatePiste from "../Piste/CreatePiste";
 import MapComponent from "../../molecules/MapComponent/MapComponent";
+import { Input } from "../../atoms";
 
 const Station = (props) => {
   let StationStyled = styled.div`
@@ -48,7 +49,12 @@ const Station = (props) => {
   });
   const [pistes, setPistes] = useState(null);
   const [meteo, setMeteo] = useState(null);
+  const [filtreName, setFiltreName] = useState("");
 
+  const handleNameChange = (e) => {
+    setFiltreName(e.target.value);
+    getPistes();
+  };
   const [addPiste, setAddPiste] = useState(false);
   const addPisteForm = () => {
     setAddPiste(true);
@@ -61,7 +67,10 @@ const Station = (props) => {
 
     const config = apiStation(
       "get",
-      "station/" + props.datas.id + "/piste",
+      "station/" +
+        props.datas.id +
+        "/piste" +
+        (filtreName !== "" ? "/filtre?nom=" + filtreName : ""),
       {},
       user.token
     );
@@ -163,6 +172,33 @@ const Station = (props) => {
           name={props.datas.nom}
         />
       )}
+      {/* Affichage des prévisions météorologiques */}
+      {meteo && !addPiste ? (
+        <div>
+          <h2>Prévisions météorologiques pour {props.datas.nom}</h2>
+          {meteo.forecast.map((forecastData, index) => (
+            <div key={index}>
+              <p>Date et heure : {forecastData.datetime}</p>
+              <p>Vent : {forecastData.wind10m} km/h</p>
+              <p>Précipitations : {forecastData.rr10} mm</p>
+              {/* Ajoutez d'autres éléments à afficher selon vos besoins */}
+            </div>
+          ))}
+        </div>
+      ) : (
+        ""
+      )}
+      {!addPiste ? <h2>Liste des pistes</h2> : ""}
+      {!addPiste ? (
+        <Input
+          placeholder="Filtre par nom"
+          onChange={handleNameChange}
+          value={filtreName}
+        />
+      ) : (
+        ""
+      )}
+
       {addPiste
         ? ""
         : pistes
@@ -180,25 +216,6 @@ const Station = (props) => {
       ) : (
         <div>
           {" "}
-          {/* Affichage des prévisions météorologiques */}
-          {meteo ? (
-            <div>
-              <h2>Prévisions météorologiques pour {props.datas.nom}</h2>
-              {meteo.forecast.map((forecastData, index) => (
-                <div key={index}>
-                  <p>Date et heure : {forecastData.datetime}</p>
-                  <p>Vent : {forecastData.wind10m} km/h</p>
-                  <p>Précipitations : {forecastData.rr10} mm</p>
-                  {/* Ajoutez d'autres éléments à afficher selon vos besoins */}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>
-              Pas de données météorologiques disponibles pour le moment.(Ou
-              token error)
-            </div>
-          )}
           <CancelWrapper>
             <Button buttonTitle="Retour" action={props.cancel} />
           </CancelWrapper>

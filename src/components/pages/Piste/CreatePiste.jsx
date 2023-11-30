@@ -8,6 +8,7 @@ const CreatePiste = (props) => {
   const [couleur, setCouleur] = useState("");
   const [longeur, setLongeur] = useState("");
   const [ouvert, setOuvert] = useState(false);
+  const [temps, setTemps] = useState(0);
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -20,6 +21,9 @@ const CreatePiste = (props) => {
   const handleOuvertChange = () => {
     setOuvert(!ouvert);
   };
+  const handleTempsChange = (e) => {
+    setTemps(e.target.value);
+  };
 
   const confirmWithValues = () => {
     props.confirm(name, couleur, longeur, ouvert);
@@ -31,6 +35,7 @@ const CreatePiste = (props) => {
       <Input placeholder="Nom" onChange={handleNameChange} />
       <Input placeholder="Couleur" onChange={handleCouleurChange} />
       <Input placeholder="Longeur" onChange={handleLongeurChange} />
+      <Input placeholder="Temps" onChange={handleTempsChange} />
       <span>Ouverte?</span>
       <Input
         placeholder="Ouvert"

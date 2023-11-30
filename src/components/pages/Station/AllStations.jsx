@@ -8,6 +8,7 @@ import Station from "../Station/Station";
 import { Button } from "../../atoms";
 import styled from "styled-components";
 import CreateStation from "../Station/CreateStation";
+import { Input } from "../../atoms";
 
 const AllStations = () => {
   let AllStationsStyled = styled.div`
@@ -42,6 +43,12 @@ const AllStations = () => {
     setAddStation(true);
   };
 
+  const [filtreName, setFiltreName] = useState("");
+  const handleNameChange = (e) => {
+    setFiltreName(e.target.value);
+    getStations();
+  };
+
   const selectStation = (station) => {
     setSelectedStation(station);
   };
@@ -73,7 +80,7 @@ const AllStations = () => {
 
     const config = apiStation(
       "post",
-      "station",
+      "station" + (filtreName !== "" ? "/search?nom=" + filtreName : ""),
       { nom: nom, gps: latitude + "," + longitude },
       user.token
     );
@@ -96,7 +103,14 @@ const AllStations = () => {
         addStation ? (
           <CreateStation cancel={cancelStation} confirm={createStation} />
         ) : (
-          <h1>Liste des stations</h1>
+          <div>
+            <h1>Liste des stations</h1>
+            <Input
+              placeholder="Filtre par nom"
+              onChange={handleNameChange}
+              value={filtreName}
+            />
+          </div>
         )
       ) : (
         ""

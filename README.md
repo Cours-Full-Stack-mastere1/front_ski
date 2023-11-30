@@ -9,8 +9,8 @@ Suivez ces étapes pour configurer et exécuter le projet front-end :
 
 ### 1.Clonage du Répertoire
 ```
-git clone [URL_DU_REPOSITORY]
-cd nom_du_dossier
+git clone (https://github.com/Cours-Full-Stack-mastere1/front_ski)
+cd front_ski
 ```
 ### 2.Installation des Dépendances
 ```

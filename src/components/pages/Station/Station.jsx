@@ -53,7 +53,6 @@ const Station = (props) => {
 
   const handleNameChange = (e) => {
     setFiltreName(e.target.value);
-    getPistes();
   };
   const [addPiste, setAddPiste] = useState(false);
   const addPisteForm = () => {
@@ -70,12 +69,13 @@ const Station = (props) => {
       "station/" +
         props.datas.id +
         "/piste" +
-        (filtreName !== "" ? "/filtre?nom=" + filtreName : ""),
+        (filtreName !== "" ? "/filter?name=" + filtreName : ""),
       {},
       user.token
     );
     axios(config)
       .then((res) => {
+        console.log("res.data", res.data);
         setPistes(res.data);
       })
       .catch((err) => {
@@ -151,6 +151,10 @@ const Station = (props) => {
     getPistes();
     getMeteo();
   }, []);
+
+  useEffect(() => {
+    getPistes();
+  }, [filtreName]);
 
   //TODO: add map to see where is the station
   //TODO: ajouter la meteo

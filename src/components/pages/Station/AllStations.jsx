@@ -46,7 +46,6 @@ const AllStations = () => {
   const [filtreName, setFiltreName] = useState("");
   const handleNameChange = (e) => {
     setFiltreName(e.target.value);
-    getStations();
   };
 
   const selectStation = (station) => {
@@ -63,7 +62,12 @@ const AllStations = () => {
       return <div>Vous devez être connecté pour voir les stations</div>;
     }
 
-    const config = apiStation("get", "station", {}, user.token);
+    const config = apiStation(
+      "get",
+      "station" + (filtreName !== "" ? "/search?name=" + filtreName : ""),
+      {},
+      user.token
+    );
     axios(config)
       .then((res) => {
         setDatas(res.data);
@@ -80,7 +84,7 @@ const AllStations = () => {
 
     const config = apiStation(
       "post",
-      "station" + (filtreName !== "" ? "/search?nom=" + filtreName : ""),
+      "station",
       { nom: nom, gps: latitude + "," + longitude },
       user.token
     );
@@ -96,6 +100,10 @@ const AllStations = () => {
   useEffect(() => {
     getStations();
   }, []);
+
+  useEffect(() => {
+    getStations();
+  }, [filtreName]);
 
   return (
     <AllStationsStyled>

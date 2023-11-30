@@ -27,3 +27,7 @@ npm start
 ## Utilisation
 
 Après avoir lancé l'application React, ouvrez votre navigateur et accédez à http://localhost:3000 pour utiliser l'interface utilisateur. Vous pourrez visualiser et gérer les stations de ski via cette interface.
+
+Compte admin pour l'app: 
+-username:admin
+-password:password
